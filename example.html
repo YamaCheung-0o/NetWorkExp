@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>简单 Web 服务器示例</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #333; }
+        pre { background-color: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👋 欢迎访问简单 Web 服务器</h1>
+        <p>当前时间：<span id="current-time">加载中...</span></p>
+        
+        <h2>可用路径</h2>
+        <ul>
+            <li><a href="/">/</a> - 当前页面</li>
+            <li><a href="/about">/about</a> - 关于页面</li>
+            <li><a href="/api/data">/api/data</a> - JSON 数据示例</li>
+        </ul>
+        
+        <h2>客户端信息</h2>
+        <pre id="client-info">加载中...</pre>
+    </div>
+    
+    <script>
+        // 更新当前时间
+        document.getElementById('current-time').textContent = new Date().toLocaleString();
+        
+        // 获取客户端信息
+        fetch('/api/data')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('client-info').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(err => {
+                document.getElementById('client-info').textContent = `获取数据失败: ${err.message}`;
+            });
+    </script>
+</body>
+</html>    
